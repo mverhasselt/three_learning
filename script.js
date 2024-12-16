@@ -26,7 +26,7 @@ scene.add(pointLight);
 // Create a cube with PhongMaterial instead of BasicMaterial
 const geometry = new THREE.BoxGeometry();
 const material = new THREE.MeshPhongMaterial({ 
-    color: 0x00ff00,
+    color: 0xD4814D,
     shininess: 60
 });
 const cube = new THREE.Mesh(geometry, material);
@@ -35,7 +35,7 @@ scene.add(cube);
 
 // Add a plane
 const planeGeometry = new THREE.PlaneGeometry(20, 20);
-const planeMaterial = new THREE.MeshPhongMaterial({ color: 0x808080 });
+const planeMaterial = new THREE.MeshPhongMaterial({ color: 0x579584 });
 const plane = new THREE.Mesh(planeGeometry, planeMaterial);
 plane.rotation.x = -Math.PI / 2; // Rotate to be horizontal
 plane.position.y = -2; // Position below the cube
