@@ -51,12 +51,6 @@ const mouse = new THREE.Vector2();
 let isDragging = false;
 let previousMousePosition = { x: 0, y: 0 };
 
-// Add these variables after the existing declarations
-let velocity = { x: 0, y: 0 };
-let isDecelerating = false;
-const friction = 0.9; // Adjust this value to change deceleration speed
-const velocityThreshold = 0.001; // Minimum velocity before stopping
-
 // Add these event listeners after the window resize listener
 renderer.domElement.addEventListener('mousedown', onMouseDown);
 renderer.domElement.addEventListener('mousemove', onMouseMove);
@@ -89,12 +83,8 @@ function onMouseMove(event) {
             y: event.clientY - previousMousePosition.y
         };
 
-        // Update velocity based on current movement
-        velocity.x = deltaMove.x * 0.01;
-        velocity.y = -deltaMove.y * 0.01;
-
-        cube.position.x += velocity.x;
-        cube.position.y += velocity.y;
+        cube.position.x += deltaMove.x * 0.01;
+        cube.position.y -= deltaMove.y * 0.01;
 
         previousMousePosition = {
             x: event.clientX,
@@ -105,7 +95,6 @@ function onMouseMove(event) {
 
 function onMouseUp() {
     isDragging = false;
-    isDecelerating = true;
 }
 
 function onTouchStart(event) {
@@ -135,12 +124,8 @@ function onTouchMove(event) {
             y: touch.clientY - previousMousePosition.y
         };
 
-        // Update velocity based on current movement
-        velocity.x = deltaMove.x * 0.01;
-        velocity.y = -deltaMove.y * 0.01;
-
-        cube.position.x += velocity.x;
-        cube.position.y += velocity.y;
+        cube.position.x += deltaMove.x * 0.01;
+        cube.position.y -= deltaMove.y * 0.01;
 
         previousMousePosition = {
             x: touch.clientX,
@@ -151,32 +136,17 @@ function onTouchMove(event) {
 
 function onTouchEnd() {
     isDragging = false;
-    isDecelerating = true;
 }
 
-// Modify the animate function
+// Modify the animate function to only rotate when not dragging
 function animate() {
     requestAnimationFrame(animate);
 
-    // Handle deceleration
-    if (isDecelerating) {
-        if (Math.abs(velocity.x) > velocityThreshold || Math.abs(velocity.y) > velocityThreshold) {
-            cube.position.x += velocity.x;
-            cube.position.y += velocity.y;
-            
-            // Apply friction
-            velocity.x *= friction;
-            velocity.y *= friction;
-        } else {
-            // Stop movement when velocity is very low
-            isDecelerating = false;
-            velocity.x = 0;
-            velocity.y = 0;
-        }
+    // Rotate the cube only when not dragging
+    if (!isDragging) {
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.01;
     }
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
-    
 
     renderer.render(scene, camera);
 }
