@@ -26,7 +26,7 @@ scene.add(pointLight);
 // Create a cube with PhongMaterial instead of BasicMaterial
 const geometry = new THREE.BoxGeometry();
 const material = new THREE.MeshPhongMaterial({ 
-    color: 0xD4814D,
+    color: 0xD44D4D,
     shininess: 60
 });
 const cube = new THREE.Mesh(geometry, material);
@@ -75,6 +75,7 @@ function onMouseDown(event) {
     
     if (intersects.length > 0) {
         isDragging = true;
+        isDecelerating = false;
         previousMousePosition = {
             x: event.clientX,
             y: event.clientY
@@ -120,6 +121,7 @@ function onTouchStart(event) {
     
     if (intersects.length > 0) {
         isDragging = true;
+        isDecelerating = false;
         previousMousePosition = {
             x: touch.clientX,
             y: touch.clientY
