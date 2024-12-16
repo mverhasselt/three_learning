@@ -89,12 +89,13 @@ function onMouseMove(event) {
             y: event.clientY - previousMousePosition.y
         };
 
-        // Update velocity based on current movement
+        // Store the velocity for use after release
         velocity.x = deltaMove.x * 0.01;
         velocity.y = -deltaMove.y * 0.01;
 
-        cube.position.x += velocity.x;
-        cube.position.y += velocity.y;
+        // Direct movement while dragging
+        cube.position.x += deltaMove.x * 0.01;
+        cube.position.y -= deltaMove.y * 0.01;
 
         previousMousePosition = {
             x: event.clientX,
@@ -135,12 +136,13 @@ function onTouchMove(event) {
             y: touch.clientY - previousMousePosition.y
         };
 
-        // Update velocity based on current movement
+        // Store the velocity for use after release
         velocity.x = deltaMove.x * 0.01;
         velocity.y = -deltaMove.y * 0.01;
 
-        cube.position.x += velocity.x;
-        cube.position.y += velocity.y;
+        // Direct movement while dragging
+        cube.position.x += deltaMove.x * 0.01;
+        cube.position.y -= deltaMove.y * 0.01;
 
         previousMousePosition = {
             x: touch.clientX,
